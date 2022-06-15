@@ -1,12 +1,23 @@
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, Dimensions } from 'react-native';
+import { 
+  StyleSheet, 
+  Text, 
+  View, 
+  ScrollView, 
+  Dimensions, 
+  ActivityIndicator
+} from 'react-native';
 import * as Location from 'expo-location';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
+// API키는 서버에 둬야함
+const API_KEY = '58df8615efe73067fbead169c0274ab8';
+
 export default function App() {
   const [region, setRegion] = useState("Loading...");
+  const [days, setDays] = useState([]);
   const [ok, setOk] = useState(true);
   const getWeather = async() => {
     const {granted} = await Location.requestForegroundPermissionsAsync();
@@ -22,12 +33,17 @@ export default function App() {
     // 위도와 경도로 사용자 위치 정보 가져오기
     const location = await Location.reverseGeocodeAsync({latitude, longitude}, {useGoogleMaps:false});
 
-    setRegion(location[0].region)
+    setRegion(location[0].region);
+    const res = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=alerts&appid=${API_KEY}&units=metric`);
+    const json = await res.json();
+    setDays(json.daily);
   };
 
   useEffect(() => {
     getWeather();
   },[])
+
+  console.log(days)
 
   return (
     <View style={styles.container}>
@@ -40,18 +56,20 @@ export default function App() {
         horizontal 
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.weather}>
-        <View style={styles.day}>
-          <Text style={styles.temp}>27</Text>
-          <Text style={styles.description}>Sunny</Text>
-        </View>
-        <View style={styles.day}>
-          <Text style={styles.temp}>27</Text>
-          <Text style={styles.description}>Sunny</Text>
-        </View>
-        <View style={styles.day}>
-          <Text style={styles.temp}>27</Text>
-          <Text style={styles.description}>Sunny</Text>
-        </View>
+        {days.length === 0 ? (
+          <View style={styles.day}>
+            <ActivityIndicator color='white' size='large' style={{marginTop: 10}}/>
+          </View>
+        ) : (
+          days.map((day, index) => 
+          <View key={index} style={styles.day}>
+            <Text>{new Date(day.dt * 1000).toString().substring(0, 10)}</Text>
+            <Text style={styles.temp}>{Math.round(day.temp.day)}</Text>
+            <Text style={styles.description}>{day.weather[0].main}</Text>
+          </View>
+          )
+        )
+        }
       </ScrollView>
     </View>
   );
