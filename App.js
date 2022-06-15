@@ -6,22 +6,34 @@ import * as Location from 'expo-location';
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function App() {
-  const [location, setLocation] = useState();
+  const [region, setRegion] = useState("Loading...");
   const [ok, setOk] = useState(true);
-  const getPermissions = async() => {
-    const permission = await Location.requestForegroundPermissionsAsync();
-    console.log(permission)
+  const getWeather = async() => {
+    const {granted} = await Location.requestForegroundPermissionsAsync();
+
+    // 사용자의 위치 접근 승인 여부 확인
+    if(!granted){
+      setOk(false);
+    }
+
+    // 사용자의 위치에 대한 위도 및 경도 가져오기
+    const {coords: {latitude, longitude}} = await Location.getCurrentPositionAsync({accuracy:5});
+    
+    // 위도와 경도로 사용자 위치 정보 가져오기
+    const location = await Location.reverseGeocodeAsync({latitude, longitude}, {useGoogleMaps:false});
+
+    setRegion(location[0].region)
   };
 
   useEffect(() => {
-    getPermissions();
+    getWeather();
   },[])
 
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
       <View style={styles.city}>
-        <Text style={styles.cityName}>Seoul</Text>
+        <Text style={styles.cityName}>{region}</Text>
       </View>
       <ScrollView 
         pagingEnabled 
