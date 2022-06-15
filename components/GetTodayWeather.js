@@ -67,7 +67,7 @@ function GetTodayWeather() {
       getWeather();
     },[])
 
-    console.log(days)
+    // console.log(days.weather[main])
 
     return (
         <View style={styles.container}>
@@ -79,9 +79,17 @@ function GetTodayWeather() {
         </View>
 
         <View style={styles.middleSide}>
-          <Image source={require('../assets/image/clear.png')}></Image>
-
+          <Image source={require('../assets/image/clear.png')} />
+          <Text style={styles.description}>Clear</Text>
+          <Text style={styles.degree}>21℃</Text>
         </View>
+
+        <View style={styles.dust}>
+          <Text style={styles.fineDust}>미세먼지 22 좋음</Text>
+          <Text style={styles.UltrafineDust}>초미세먼지 16 보통</Text>
+        </View>
+
+        <View style={styles.week}></View>
         </>
         )}
         </View>
@@ -94,10 +102,11 @@ const styles = StyleSheet.create({
       backgroundColor: '#F0F0F3'
     },
     upperSide: {
-      flex: 1,
+      flex: 0.6,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: 'pink'
+      paddingTop: 80,
+      // backgroundColor: 'pink'
     },
     cityName: {
       color: '#161B1D',
@@ -110,15 +119,46 @@ const styles = StyleSheet.create({
       fontSize: 16,
       fontWeight: '400',
       fontFamily: "Roboto",
-      marginTop: -30
     },
 
     middleSide: {
-      flex: 2,
-      justifyContent: 'center',
+      flex: 0.7,
       alignItems: 'center',
-      backgroundColor: 'yellow'
-    }
+      // backgroundColor: 'yello'
+    },
+    description: {
+      color: '#161B1D',
+      fontSize: 16,
+      fontWeight: '500',
+      fontFamily: "Roboto",
+    },
+    degree: {
+      color: '#161B1D',
+      fontSize: 24,
+      fontWeight: '400',
+      fontFamily: "Roboto",
+      paddingTop: 8
+    },
+
+    dust: {
+      flex: 0.12,
+      justifyContent: 'space-between',
+      alignItems: 'flex-start',
+      paddingLeft: 36,
+      // backgroundColor: 'green'
+    },
+    fineDust: {
+      color: '#161B1D',
+      fontSize: 14,
+      fontWeight: '400',
+      fontFamily: "NotoSans"
+    },
+    UltrafineDust: {
+      color: '#161B1D',
+      fontSize: 14,
+      fontWeight: '400',
+      fontFamily: "NotoSans"
+    },
   });
 
 export default GetTodayWeather;
