@@ -9,11 +9,22 @@ import {
   ActivityIndicator
 } from 'react-native';
 import * as Location from 'expo-location';
+import { Fontisto } from '@expo/vector-icons';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 // API키는 서버에 둬야함
 const API_KEY = '58df8615efe73067fbead169c0274ab8';
+
+const icons = {
+  Clouds : "cloudy",
+  Clear: "day-sunny",
+  Atmosphere: "cloudy-gusts",
+  Snow: "snow",
+  Rain: "rains",
+  Drizzle: "rain",
+  Thunderstorm: "lightning"
+}
 
 export default function App() {
   const [region, setRegion] = useState("Loading...");
@@ -43,8 +54,6 @@ export default function App() {
     getWeather();
   },[])
 
-  console.log(days)
-
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -64,7 +73,11 @@ export default function App() {
           days.map((day, index) => 
           <View key={index} style={styles.day}>
             <Text>{new Date(day.dt * 1000).toString().substring(0, 10)}</Text>
-            <Text style={styles.temp}>{Math.round(day.temp.day)}</Text>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Text style={styles.temp}>{Math.round(day.temp.day)}</Text>
+              <Fontisto name={icons[day.weather[0].main]} size={68} color='white'></Fontisto>
+            </View>
+
             <Text style={styles.description}>{day.weather[0].main}</Text>
           </View>
           )
