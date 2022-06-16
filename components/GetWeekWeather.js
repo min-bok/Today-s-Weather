@@ -48,7 +48,7 @@ function GetWeekWeather(props) {
                 <View style={styles.box} key={idx}>
                   <Text style={styles.date}>{new Date(day.dt * 1000).toString().substring(0, 10)}</Text>
                   <Fontisto name={icons[day.weather[0].main]} size={68} color='white'></Fontisto>
-                  <Text style={styles.temp}>{Math.round(day.temp.day)}</Text>
+                  <Text style={styles.temp}>{Math.round(day.temp.max)}℃ / {Math.round(day.temp.min)}℃</Text>
                 </View>
                 )
               })}
@@ -72,6 +72,8 @@ const styles = StyleSheet.create({
       borderRadius: 10,
       marginRight: 16,
       backgroundColor: '#F0F0F3',
+      alignItems: 'center',
+      justifyContent: 'center',
 
       ...Platform.select({
         ios: {
@@ -96,6 +98,16 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       paddingLeft: 36,
       paddingRight: 20,
+    },
+    date: {
+      color: '#161B1D',
+      fontSize: 12,
+      fontFamily: 'RobotoM',
+    },
+    temp: {
+      color: '#161B1D',
+      fontSize: 18,
+      fontFamily: 'RobotoM',
     }
 });
 

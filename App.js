@@ -13,6 +13,7 @@ import * as Font from "expo-font";
 import { Fontisto } from '@expo/vector-icons';
 import GetWeekWeather from './components/GetWeekWeather';
 import GetAirPolution from './components/GetAirPolution';
+import GetTodayWeather from './components/GetTodayWeather';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -33,7 +34,7 @@ function App() {
   const [isFont, setIsFont] = useState(false);
     const [ok, setOk] = useState(true);
     const [city, setCity] = useState("Loading...");
-    const [day, setDay] = useState("Loading...");
+    const [date, setDate] = useState('로딩중');
     const [days, setDays] = useState([]);
 
     // 폰트 적용
@@ -41,6 +42,7 @@ function App() {
       await Font.loadAsync({
         "NotoSans": require('./assets/font/NotoSansKR-Regular.otf'),
         "Roboto": require('./assets/font/Roboto-Regular.ttf'),
+        "RobotoM": require('./assets/font/Roboto-Medium.ttf'),
       });
       setIsFont(true);
     },[]);
@@ -63,7 +65,7 @@ function App() {
       setCity(location[0].region);
       const res = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=alerts&appid=${API_KEY}&units=metric`);
       const json = await res.json();
-      setDay(json.daily[0]);
+      setDate(json.daily[0]);
       setDays(json.daily);
     };
   
@@ -78,17 +80,12 @@ function App() {
           <View style={styles.upperSide}>
             <View style={styles.cityAndDate}>
               <Text style={styles.cityName}>{city}</Text>
-              <Text style={styles.date}>{new Date(day.dt * 1000).toString().substring(0, 10)}</Text>
-            </View>
-
-            <View style={styles.ImgAndWeather}>
-              <Image source={require('./assets/image/clear.png')} />
-              <Text style={styles.description}>Clear</Text>
-              <Text style={styles.degree}>21℃</Text>
+              <Text style={styles.date}>{new Date(date.dt * 1000).toString().substring(0, 10)}</Text>
             </View>
           </View>
 
           <View style={styles.lowerSide}>
+            <GetTodayWeather days={days}></GetTodayWeather>
             <GetAirPolution />
             <GetWeekWeather days={days}></GetWeekWeather>
           </View>
@@ -103,8 +100,9 @@ const styles = StyleSheet.create({
       flex: 1
     },
     upperSide: {
-      flex: 3,
-      backgroundColor: '#F0F0F3'
+      flex: 1,
+      // backgroundColor: '#F0F0F3'
+      backgroundColor: 'pink'
     },
     cityAndDate: {
       flex: 0.6,
@@ -125,27 +123,8 @@ const styles = StyleSheet.create({
       fontWeight: '400',
       fontFamily: "Roboto",
     },
-
-    ImgAndWeather: {
-      flex: 0.7,
-      alignItems: 'center',
-      // backgroundColor: 'yello'
-    },
-    description: {
-      color: '#161B1D',
-      fontSize: 16,
-      fontWeight: '500',
-      fontFamily: "Roboto",
-    },
-    degree: {
-      color: '#161B1D',
-      fontSize: 24,
-      fontWeight: '400',
-      fontFamily: "Roboto",
-      paddingTop: 8
-    },
     lowerSide: {
-      flex: 2,
+      flex: 3,
       backgroundColor: '#F0F0F3'
     }
   });
