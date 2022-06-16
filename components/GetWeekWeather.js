@@ -10,11 +10,24 @@ import {
     Dimensions, 
     ActivityIndicator
 } from 'react-native';
+import { Fontisto } from '@expo/vector-icons';
+
+const icons = {
+  Clouds : "cloudy",
+  Clear: "day-sunny",
+  Atmosphere: "cloudy-gusts",
+  Snow: "snow",
+  Rain: "rains",
+  Drizzle: "rain",
+  Thunderstorm: "lightning"
+}
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 function GetWeekWeather(props) {
+      
+    props.days.shift()
 
     return(
         <View style={styles.dust}>
@@ -24,13 +37,23 @@ function GetWeekWeather(props) {
             horizontal
             showsHorizontalScrollIndicator={false}
           >
-            <View style={styles.box}></View>
-            <View style={styles.box}></View>
-            <View style={styles.box}></View>
-            <View style={styles.box}></View>
-            <View style={styles.box}></View>
-            <View style={styles.box}></View>
-            <View style={styles.box}></View>
+          {props.days.length === 0 ? (
+            <View style={styles.loading}>
+              <ActivityIndicator color='#161B1D' size='large'/>
+            </View>
+          ) : (
+            <View style={styles.weekCont}>
+              {props.days.map((day, idx) => {
+                return (
+                <View style={styles.box} key={idx}>
+                  <Text style={styles.date}>{new Date(day.dt * 1000).toString().substring(0, 10)}</Text>
+                  <Fontisto name={icons[day.weather[0].main]} size={68} color='white'></Fontisto>
+                  <Text style={styles.temp}>{Math.round(day.temp.day)}</Text>
+                </View>
+                )
+              })}
+            </View>
+          )}
           </ScrollView>
         </View>
     )
@@ -41,8 +64,6 @@ const styles = StyleSheet.create({
       flex: 4,
     },
     scroll: {
-      paddingLeft: 36,
-      paddingRight: 20,
       alignItems: 'center'
     },
     box: {
@@ -66,6 +87,15 @@ const styles = StyleSheet.create({
           elevation: 10,
         },
       })
+    },
+    loading: {
+      width: SCREEN_WIDTH,
+      alignItems: 'center'
+    },
+    weekCont: {
+      flexDirection: 'row',
+      paddingLeft: 36,
+      paddingRight: 20,
     }
 });
 
