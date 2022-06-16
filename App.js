@@ -3,14 +3,10 @@ import {
   StyleSheet, 
   Text, 
   View, 
-  Image,
-  ScrollView, 
-  Dimensions, 
-  ActivityIndicator
+  Dimensions
 } from 'react-native';
 import * as Location from 'expo-location';
 import * as Font from "expo-font";
-import { Fontisto } from '@expo/vector-icons';
 import GetWeekWeather from './components/GetWeekWeather';
 import GetAirPolution from './components/GetAirPolution';
 import GetTodayWeather from './components/GetTodayWeather';
@@ -19,16 +15,6 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 
 // API키는 서버에 둬야함
 const API_KEY = '58df8615efe73067fbead169c0274ab8';
-
-const icons = {
-  Clouds : "cloudy",
-  Clear: "day-sunny",
-  Atmosphere: "cloudy-gusts",
-  Snow: "snow",
-  Rain: "rains",
-  Drizzle: "rain",
-  Thunderstorm: "lightning"
-}
 
 function App() {
   const [isFont, setIsFont] = useState(false);
@@ -101,8 +87,8 @@ const styles = StyleSheet.create({
     },
     upperSide: {
       flex: 1,
-      // backgroundColor: '#F0F0F3'
-      backgroundColor: 'pink'
+      backgroundColor: '#F0F0F3'
+      // backgroundColor: 'pink'
     },
     cityAndDate: {
       flex: 0.6,

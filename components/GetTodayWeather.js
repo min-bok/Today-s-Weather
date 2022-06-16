@@ -3,23 +3,27 @@ import {
   StyleSheet, 
   Text, 
   View, 
-  Image,
-  ScrollView, 
-  Dimensions, 
-  ActivityIndicator
+  Image
 } from 'react-native';
 
+const icons = {
+  Cloud : require('../assets/image/cloudy.png'),
+  Clear: require('../assets/image/clear.png'),
+  // Atmosphere: "cloudy-gusts",
+  Snow: require('../assets/image/snow.png'),
+  Rain: require('../assets/image/rain.png'),
+  // Drizzle: "rain",
+  // Thunderstorm: "lightning"
+}
+
 function GetTodayWeather(props) {
-
-  console.log(props.days[0])
-
   return(
     <>
     {props.days.length ===  0 ? (
       <Text>날씨 준비중!</Text>
     ) : (
       <View style={styles.cont}>
-        <Image source={require('../assets/image/clear.png')} />
+        <Image source={icons.Clear}/>
         <Text style={styles.description}>{props.days[0].weather[0].main.toUpperCase()}</Text>
         <Text style={styles.degree}>{Math.round(props.days[0].temp.max)}℃ / {Math.round(props.days[0].temp.min)}℃</Text>
       </View>
@@ -33,7 +37,7 @@ const styles = StyleSheet.create({
     flex: 4,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'powderblue'
+    // backgroundColor: 'powderblue'
   },
   description: {
     color: '#161B1D',
