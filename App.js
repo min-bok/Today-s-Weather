@@ -12,6 +12,7 @@ import * as Location from 'expo-location';
 import * as Font from "expo-font";
 import { Fontisto } from '@expo/vector-icons';
 import GetWeekWeather from './components/GetWeekWeather';
+import GetAirPolution from './components/GetAirPolution';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -33,7 +34,7 @@ function App() {
     const [ok, setOk] = useState(true);
     const [city, setCity] = useState("Loading...");
     const [day, setDay] = useState("Loading...");
-    const [days, setDays] = useState("Loading...");
+    const [days, setDays] = useState([]);
 
     // 폰트 적용
     useEffect(async () => {
@@ -70,41 +71,42 @@ function App() {
       getWeather();
     },[])
 
-    // console.log(days.weather[main])
-
     return (
-        <View style={styles.container}>
+      <>
         {isFont && (
-        <>
-        <View style={styles.upperSide}>
-          <Text style={styles.cityName}>{city}</Text>
-          <Text style={styles.date}>{new Date(day.dt * 1000).toString().substring(0, 10)}</Text>
-        </View>
+        <View style={styles.container}>
+          <View style={styles.upperSide}>
+            <View style={styles.cityAndDate}>
+              <Text style={styles.cityName}>{city}</Text>
+              <Text style={styles.date}>{new Date(day.dt * 1000).toString().substring(0, 10)}</Text>
+            </View>
 
-        <View style={styles.middleSide}>
-          <Image source={require('./assets/image/clear.png')} />
-          <Text style={styles.description}>Clear</Text>
-          <Text style={styles.degree}>21℃</Text>
-        </View>
+            <View style={styles.ImgAndWeather}>
+              <Image source={require('./assets/image/clear.png')} />
+              <Text style={styles.description}>Clear</Text>
+              <Text style={styles.degree}>21℃</Text>
+            </View>
+          </View>
 
-        <View style={styles.dust}>
-          <Text style={styles.fineDust}>미세먼지 22 좋음</Text>
-          <Text style={styles.UltrafineDust}>초미세먼지 16 보통</Text>
+          <View style={styles.lowerSide}>
+            <GetAirPolution />
+            <GetWeekWeather days={days}></GetWeekWeather>
+          </View>
         </View>
-
-        <GetWeekWeather days={days}></GetWeekWeather>
-        </>
         )}
-        </View>
+        </>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
+      flex: 1
+    },
+    upperSide: {
       flex: 1,
       backgroundColor: '#F0F0F3'
     },
-    upperSide: {
+    cityAndDate: {
       flex: 0.6,
       justifyContent: 'center',
       alignItems: 'center',
@@ -124,7 +126,7 @@ const styles = StyleSheet.create({
       fontFamily: "Roboto",
     },
 
-    middleSide: {
+    ImgAndWeather: {
       flex: 0.7,
       alignItems: 'center',
       // backgroundColor: 'yello'
@@ -142,26 +144,9 @@ const styles = StyleSheet.create({
       fontFamily: "Roboto",
       paddingTop: 8
     },
-
-    dust: {
-      flex: 0.12,
-      justifyContent: 'space-between',
-      alignItems: 'flex-start',
-      paddingLeft: 36,
-      // backgroundColor: 'green'
-    },
-    fineDust: {
-      color: '#161B1D',
-      fontSize: 14,
-      fontWeight: '400',
-      fontFamily: "NotoSans"
-    },
-    UltrafineDust: {
-      color: '#161B1D',
-      fontSize: 14,
-      fontWeight: '400',
-      fontFamily: "NotoSans"
-    },
+    lowerSide: {
+      flex: 1,
+    }
   });
 
 export default App;

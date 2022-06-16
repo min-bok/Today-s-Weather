@@ -53,8 +53,6 @@ function GetTodayWeather() {
       getWeather();
     },[])
 
-    console.log(days[0])
-
     return (
         <>
         <View style={styles.city}>
