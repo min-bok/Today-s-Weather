@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
       flex: 1,
       alignItems: 'flex-start',
       paddingLeft: 36,
-      backgroundColor: 'green'
+    //   backgroundColor: 'green'
     },
     fineDust: {
       color: '#161B1D',

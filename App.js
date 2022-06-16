@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
       flex: 1
     },
     upperSide: {
-      flex: 1,
+      flex: 3,
       backgroundColor: '#F0F0F3'
     },
     cityAndDate: {
@@ -145,7 +145,8 @@ const styles = StyleSheet.create({
       paddingTop: 8
     },
     lowerSide: {
-      flex: 1,
+      flex: 2,
+      backgroundColor: '#F0F0F3'
     }
   });
 
