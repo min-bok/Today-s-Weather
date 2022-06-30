@@ -6,24 +6,55 @@ import {
   Image
 } from 'react-native';
 
-const icons = {
-  Cloud : require('../assets/image/cloudy.png'),
-  Clear: require('../assets/image/clear.png'),
-  // Atmosphere: "cloudy-gusts",
-  Snow: require('../assets/image/snow.png'),
-  Rain: require('../assets/image/rain.png'),
-  // Drizzle: "rain",
-  // Thunderstorm: "lightning"
-}
-
 function GetTodayWeather(props) {
+  const [clear, setClear] = useState(false);
+  const [cloud, setCloud] = useState(false);
+  const [rain, setRain] = useState(false);
+  const [snow, setSnow] = useState(false);
+
+  const icons = {
+    Clear: require('../assets/image/clear.png'),
+    Cloud : require('../assets/image/cloud.png'),
+    // Atmosphere: "cloudy-gusts",
+    Rain: require('../assets/image/rain.png'),
+    Snow: require('../assets/image/snow.png'),
+    // Drizzle: "rain",
+    // Thunderstorm: "lightning"
+  }
+
+  useEffect(() => {
+    switch(props.days[0].weather[0].main) {
+      case 'Clear' :
+        setClear(true);
+        break;
+      case 'Clouds' :
+        setCloud(true)
+        break;
+      case 'Rain' :
+        setRain(true);
+        break;
+      case 'Snow' :
+        setSnow(true);
+        break;
+    }
+  },[])
+
   return(
     <>
     {props.days.length ===  0 ? (
       <Text>날씨 준비중!</Text>
     ) : (
       <View style={styles.cont}>
-        <Image source={icons.Clear}/>
+        {props.days[0].weather[0].main === undefined ? (
+          <Text>룰루랄라</Text>
+        ) : (
+          <>
+          {clear && <Image source={icons.Clear} />}
+          {cloud && <Image source={icons.Cloud} />}
+          {rain && <Image source={icons.Rain} />}
+          {snow && <Image source={icons.Snow} />}
+          </>
+        )}
         <Text style={styles.description}>{props.days[0].weather[0].main.toUpperCase()}</Text>
         <Text style={styles.degree}>{Math.round(props.days[0].temp.max)}℃ / {Math.round(props.days[0].temp.min)}℃</Text>
       </View>
