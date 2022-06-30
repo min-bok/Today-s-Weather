@@ -14,7 +14,7 @@ function GetTodayWeather(props) {
 
   const icons = {
     Clear: require('../assets/image/clear.png'),
-    Cloud : require('../assets/image/cloud.png'),
+    Clouds : require('../assets/image/cloud.png'),
     // Atmosphere: "cloudy-gusts",
     Rain: require('../assets/image/rain.png'),
     Snow: require('../assets/image/snow.png'),
@@ -39,7 +39,7 @@ function GetTodayWeather(props) {
           break;
       }
     } 
-  },[props])
+  },[props]);
 
   return(
     <>

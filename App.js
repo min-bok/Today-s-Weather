@@ -59,6 +59,8 @@ function App() {
       getWeather();
     },[])
 
+    // console.log(days)
+
     return (
       <>
         {isFont && (

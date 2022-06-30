@@ -10,29 +10,21 @@ import {
     Dimensions, 
     ActivityIndicator
 } from 'react-native';
-import { Fontisto } from '@expo/vector-icons';
 
 const icons = {
-  Clouds : "cloudy",
-  Clear: "day-sunny",
-  Atmosphere: "cloudy-gusts",
-  Snow: "snow",
-  Rain: "rains",
-  Drizzle: "rain",
-  Thunderstorm: "lightning"
+  Clear: require('../assets/image/clear.png'),
+  Clouds : require('../assets/image/cloud.png'),
+  // Atmosphere: "cloudy-gusts",
+  Rain: require('../assets/image/rain.png'),
+  Snow: require('../assets/image/snow.png'),
+  // Drizzle: "rain",
+  // Thunderstorm: "lightning"
 }
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 function GetWeekWeather(props) {
-  const [clear, setClear] = useState(false);
-  const [cloud, setCloud] = useState(false);
-  const [rain, setRain] = useState(false);
-  const [snow, setSnow] = useState(false);
-
-    props.days.shift()
-
     return(
         <View style={styles.dust}>
           <ScrollView 
@@ -51,7 +43,7 @@ function GetWeekWeather(props) {
                 return (
                 <View style={styles.box} key={idx}>
                   <Text style={styles.date}>{new Date(day.dt * 1000).toString().substring(0, 10)}</Text>
-                  <Fontisto name={icons[day.weather[0].main]} size={68} color='white'></Fontisto>
+                  <Image source={icons[day.weather[0].main]} style={{width: '80%', height: 90}} resizeMode='contain'></Image>
                   <Text style={styles.temp}>{Math.round(day.temp.max)}℃ / {Math.round(day.temp.min)}℃</Text>
                 </View>
                 )
@@ -77,7 +69,9 @@ const styles = StyleSheet.create({
       marginRight: 16,
       backgroundColor: '#F0F0F3',
       alignItems: 'center',
-      justifyContent: 'center',
+      justifyContent: 'space-between',
+      paddingTop: 16,
+      paddingBottom: 16,
 
       ...Platform.select({
         ios: {
