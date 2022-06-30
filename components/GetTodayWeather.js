@@ -23,21 +23,23 @@ function GetTodayWeather(props) {
   }
 
   useEffect(() => {
-    switch(props.days[0].weather[0].main) {
-      case 'Clear' :
-        setClear(true);
-        break;
-      case 'Clouds' :
-        setCloud(true)
-        break;
-      case 'Rain' :
-        setRain(true);
-        break;
-      case 'Snow' :
-        setSnow(true);
-        break;
-    }
-  },[])
+    if(props.days[0] !== undefined) {
+      switch(props.days[0].weather[0].main) {
+        case 'Clear' :
+          setClear(true);
+          break;
+        case 'Clouds' :
+          setCloud(true)
+          break;
+        case 'Rain' :
+          setRain(true);
+          break;
+        case 'Snow' :
+          setSnow(true);
+          break;
+      }
+    } 
+  },[props])
 
   return(
     <>

@@ -26,7 +26,11 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 function GetWeekWeather(props) {
-      
+  const [clear, setClear] = useState(false);
+  const [cloud, setCloud] = useState(false);
+  const [rain, setRain] = useState(false);
+  const [snow, setSnow] = useState(false);
+
     props.days.shift()
 
     return(

@@ -71,9 +71,9 @@ function App() {
           </View>
 
           <View style={styles.lowerSide}>
-            <GetTodayWeather days={days}></GetTodayWeather>
+            <GetTodayWeather days={days || []}></GetTodayWeather>
             <GetAirPolution />
-            <GetWeekWeather days={days}></GetWeekWeather>
+            <GetWeekWeather days={days || []}></GetWeekWeather>
           </View>
         </View>
         )}
