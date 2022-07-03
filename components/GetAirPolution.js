@@ -9,6 +9,8 @@ import {
 function GetAirPolution(props) {
   const KEY = `%2FY71MdAa3g6ClOATs%2FkjdG%2BHOyoyRkkpdGhoGUrk7I3%2Fc4%2FIKMhmuDqgkMlsEtXPRx4ozrxlV9seroVN50JQcg%3D%3D`;
   const [sido, setSido] = useState('');
+  const [pm10, setPm10] = useState('');
+  const [pm2_5, setPm2_5] = useState('');
   
   useEffect(() => {
     setSido(props.city.slice(0, 2));
@@ -16,7 +18,9 @@ function GetAirPolution(props) {
 
     axios.get(url)
     .then(function(res) {
-      console.log(res)
+      const data = res.data.response.body.items[0];
+      setPm10(data["pm10Value"]);
+      setPm2_5(data["pm25Value"]);
     })
     .catch(function(error) {
       console.log(error);
@@ -25,8 +29,8 @@ function GetAirPolution(props) {
 
     return(
     <View style={styles.dust}>
-        <Text style={styles.fineDust}>미세먼지 22 좋음</Text>
-        <Text style={styles.UltrafineDust}>초미세먼지 16 보통</Text>
+        <Text style={styles.fineDust}>미세먼지 {pm10} 좋음</Text>
+        <Text style={styles.UltrafineDust}>초미세먼지 {pm2_5} 보통</Text>
     </View>
     )
 }
