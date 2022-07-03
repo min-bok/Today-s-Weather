@@ -11,6 +11,10 @@ function GetAirPolution(props) {
   const [sido, setSido] = useState('');
   const [pm10, setPm10] = useState('');
   const [pm2_5, setPm2_5] = useState('');
+  const [pm10Grade, setPm10Grade] = useState('');
+  const [pm2_5Grade, setPm2_5Grade] = useState('');
+  const [pm10Result, setPm10Result] = useState('');
+  const [pm2_5Result, setPm2_5Result] = useState('');
   
   useEffect(() => {
     setSido(props.city.slice(0, 2));
@@ -21,6 +25,38 @@ function GetAirPolution(props) {
       const data = res.data.response.body.items[0];
       setPm10(data["pm10Value"]);
       setPm2_5(data["pm25Value"]);
+      setPm10Grade(data["pm10Grade1h"]);
+      setPm2_5Grade(data["pm25Grade1h"]);
+
+      switch(pm10Grade) {
+        case '1' : 
+          setPm10Result('좋음');
+          break;
+        case '2' : 
+          setPm10Result('보통');
+          break;
+        case '3' :
+          setPm10Result('나쁨');
+          break;
+        case '4' :
+          setPm10Result('매우나쁨');
+          break;
+      }
+
+      switch(pm2_5Grade) {
+        case '1' : 
+          setPm2_5Result('좋음');
+          break;
+        case '2' : 
+          setPm2_5Result('보통');
+          break;
+        case '3' :
+          setPm2_5Result('나쁨');
+          break;
+        case '4' :
+          setPm2_5Result('매우나쁨');
+          break;
+      }
     })
     .catch(function(error) {
       console.log(error);
@@ -29,8 +65,8 @@ function GetAirPolution(props) {
 
     return(
     <View style={styles.dust}>
-        <Text style={styles.fineDust}>미세먼지 {pm10} 좋음</Text>
-        <Text style={styles.UltrafineDust}>초미세먼지 {pm2_5} 보통</Text>
+        <Text style={styles.fineDust}>미세먼지 {pm10} {pm10Result}</Text>
+        <Text style={styles.UltrafineDust}>초미세먼지 {pm2_5} {pm2_5Result}</Text>
     </View>
     )
 }
