@@ -59,8 +59,6 @@ function App() {
       getWeather();
     },[])
 
-    // console.log(days)
-
     return (
       <>
         {isFont && (
@@ -74,7 +72,7 @@ function App() {
 
           <View style={styles.lowerSide}>
             <GetTodayWeather days={days || []}></GetTodayWeather>
-            <GetAirPolution />
+            <GetAirPolution city={city || []}/>
             <GetWeekWeather days={days || []}></GetWeekWeather>
           </View>
         </View>

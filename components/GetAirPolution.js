@@ -1,15 +1,19 @@
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { 
     StyleSheet, 
     Text, 
     View
   } from 'react-native';
 
-function GetAirPolution() {
+function GetAirPolution(props) {
   const KEY = `%2FY71MdAa3g6ClOATs%2FkjdG%2BHOyoyRkkpdGhoGUrk7I3%2Fc4%2FIKMhmuDqgkMlsEtXPRx4ozrxlV9seroVN50JQcg%3D%3D`;
-  const url = `http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty?stationName=종로구&dataTerm=month&pageNo=1&numOfRows=100&returnType=xml&serviceKey=${KEY}`
+  const [sido, setSido] = useState('');
+  
   useEffect(() => {
+    setSido(props.city.slice(0, 2));
+    const url = `http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?sidoName=${sido}&pageNo=1&numOfRows=100&returnType=json&serviceKey=${KEY}&ver=1.3`
+
     axios.get(url)
     .then(function(res) {
       console.log(res)
