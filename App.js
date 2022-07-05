@@ -11,7 +11,7 @@ import GetWeekWeather from './components/GetWeekWeather';
 import GetAirPolution from './components/GetAirPolution';
 import GetTodayWeather from './components/GetTodayWeather';
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
+// const SCREEN_WIDTH = Dimensions.get('window').width;
 
 // API키는 서버에 둬야함
 const API_KEY = '58df8615efe73067fbead169c0274ab8';
@@ -71,9 +71,9 @@ function App() {
           </View>
 
           <View style={styles.lowerSide}>
-            <GetTodayWeather days={days || []}></GetTodayWeather>
+            <GetTodayWeather days={days || []} />
             <GetAirPolution city={city || []}/>
-            <GetWeekWeather days={days || []}></GetWeekWeather>
+            <GetWeekWeather days={days || []} />
           </View>
         </View>
         )}

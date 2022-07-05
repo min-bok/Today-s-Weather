@@ -25,10 +25,7 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 function GetWeekWeather(props) {
-
-  useEffect(() => {
-    props.days.shift()
-  },[])
+    props.days.shift();
   
     return(
         <View style={styles.dust}>
