@@ -52,7 +52,7 @@ function GetTodayWeather(props) {
         ) : (
           <>
           {clear && <Image source={icons.Clear} />}
-          {cloud && <Image source={icons.Cloud} />}
+          {cloud && <Image source={icons.Clouds} />}
           {rain && <Image source={icons.Rain} />}
           {snow && <Image source={icons.Snow} />}
           </>
