@@ -19,7 +19,7 @@ const API_KEY = '58df8615efe73067fbead169c0274ab8';
 function App() {
   const [isFont, setIsFont] = useState(false);
     const [ok, setOk] = useState(true);
-    const [city, setCity] = useState("Loading...");
+    const [city, setCity] = useState('서울');
     const [date, setDate] = useState('로딩중');
     const [days, setDays] = useState([]);
 

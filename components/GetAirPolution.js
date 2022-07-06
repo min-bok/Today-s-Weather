@@ -7,18 +7,20 @@ import {
     View
   } from 'react-native';
 
-function GetAirPolution(props) {
-
-  const sido = props.city.slice(0, 2);
-  const [pm10Result, setPm10Result] = useState('뿅');
+function GetAirPolution(props) { 
+  const [sido, setSido] = useState('');
+  const [pm10Result, setPm10Result] = useState('');
   const [pm2_5Result, setPm2_5Result] = useState('');
+
+  useEffect(() => {
+    setSido(props.city.slice(0, 2));
+  },[sido]);
+
   const KEY = `%2FY71MdAa3g6ClOATs%2FkjdG%2BHOyoyRkkpdGhoGUrk7I3%2Fc4%2FIKMhmuDqgkMlsEtXPRx4ozrxlV9seroVN50JQcg%3D%3D`;
   const URL = `http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?sidoName=${sido}&pageNo=1&numOfRows=100&returnType=json&serviceKey=${KEY}&ver=1.3`;
 
   const fetcher = url => axios.get(url).then(res => res.data);
   const { data, error } = useSWR(URL, fetcher);
-
-  console.log(data.response.body.items[0]); 
   
   useEffect(() => {
     if(data !== undefined) {
@@ -52,17 +54,24 @@ function GetAirPolution(props) {
           break;
       }
     }
-  },[]);
+  },[data]);
 
   if (error) return <Text>데이터 불러오기에 실패하였습니다😢</Text>
   if (!data) return <Text>미세먼지 정보 가져오는 중🐾</Text>
 
-  console.log(`pm10Result ${pm10Result}`)
-
     return (
       <View style={styles.dust}>
-            <Text style={styles.fineDust}>미세먼지 {data.response.body.items[0]["pm10Value"]} {pm10Result}</Text>
-            <Text style={styles.UltrafineDust}>초미세먼지 {data.response.body.items[0]["pm25Value"]} {pm2_5Result}</Text>
+      {props.city.slice(0, 2) == '서울' ? (
+        <>
+          <Text style={styles.fineDust}>미세먼지 {data.response.body.items[0]["pm10Value"]} {pm10Result} (서울 기준)</Text>
+          <Text style={styles.UltrafineDust}>초미세먼지 {data.response.body.items[0]["pm25Value"]} {pm2_5Result} (서울 기준)</Text>
+        </>
+      ) : (
+        <>
+        <Text style={styles.fineDust}>미세먼지 {data.response.body.items[0]["pm10Value"]} {pm10Result}</Text>
+        <Text style={styles.UltrafineDust}>초미세먼지 {data.response.body.items[0]["pm25Value"]} {pm2_5Result}</Text>
+      </>
+      )}
       </View>
     )
   }
@@ -78,7 +87,7 @@ const styles = StyleSheet.create({
       color: '#161B1D',
       fontSize: 14,
       fontWeight: '400',
-      fontFamily: "NotoSans"
+      fontFamily: "NotoSans",
     },
     UltrafineDust: {
       color: '#161B1D',

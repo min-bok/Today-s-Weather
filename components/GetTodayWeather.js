@@ -48,7 +48,7 @@ function GetTodayWeather(props) {
     ) : (
       <View style={styles.cont}>
         {props.days[0].weather[0].main === undefined ? (
-          <Text>룰루랄라</Text>
+          <Text>날씨 준비중!</Text>
         ) : (
           <>
           {clear && <Image source={icons.Clear} />}
